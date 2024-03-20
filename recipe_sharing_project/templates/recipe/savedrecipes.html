@@ -1,0 +1,55 @@
+{% extends 'layout/layout.html' %}
+
+{% block content %}
+
+<div class="my-5 mx-3">
+    <h1 class="text-center text-3xl font-bold">Your Saved Recipies</h1>
+    
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 pb-24 pt-5 mx-auto">
+        <div class="flex flex-wrap -m-4">
+            {% for recipe in recipes %}
+                <a href="{% url 'recipe_details' recipe.recipe.uuid %}" class="block p-4 md:w-1/4">
+                    <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                        <div class="lg:h-48 md:h-36 overflow-hidden">
+                            <img class="h-full w-full hover:scale-110 transition duration-300 ease-in-out object-cover object-center" src="/media/{{ recipe.recipe.image }}" alt="blog">
+                        </div>
+
+                        <div class="p-6">
+                            <h1 class="title-font text-lg font-medium text-gray-900 mb-1">{{ recipe.recipe.name }}</h1>
+                            <h2 class="tracking-widest text-xs title-font font-medium text-gray-900 mb-3">{{ recipe.recipe.cuisine.name }}</h2>
+                            
+                            <p>By {{ recipe.recipe.user.get_full_name }}</p>
+                            <p>Total Ingredients: {{ recipe.recipe.total_ingredients }}</p>
+                            <p class="leading-relaxed mb-3">Total Calories: {{ recipe.recipe.calories }}</p>
+
+                            <div class="space-y-0.5">
+                                <span class="text-gray-900 text-sm md:mb-2 lg:mb-0">Added {{ recipe.recipe.created_at | date:"d M Y" }}</span>
+                                <div class="text-gray-400 mr-3 flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
+                                    <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                        <span class="text-black ml-1">
+                                            {% if recipe.recipe.total_time_in_minutes <= 60  %}
+                                                {{ recipe.recipe.total_time_in_minutes }} minutes
+                                            {% else %}
+                                                {{ recipe.recipe.total_time_in_hours }}
+                                            {% endif %}
+                                        </span>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            {% empty %}
+                <p class="text-center w-full my-5">You have no recipes saved right now</p>
+            {% endfor %}
+        </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}
+
+

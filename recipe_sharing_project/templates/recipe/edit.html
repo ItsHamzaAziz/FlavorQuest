@@ -1,0 +1,102 @@
+{% extends 'layout/layout.html' %}
+
+{% block content %}
+<div class="bg-gradient-to-br from-orange-400 via-orange-600 to-orange-700 w-4/5 mx-auto mt-5 rounded-lg p-5 my-5">
+    <h1 class="text-white text-2xl text-center">Edit Recipe</h1>
+
+    {% if recipe.user != request.user  %}
+        <p class="mt-2 text-center text-white">This is not your recipe. You cannot edit it.</p>
+
+
+    {% else %}
+        {% for message in messages %}
+            {% if 'success' in message.tags %}
+                <div id="alert-2" class="flex items-center p-4 mb-4 text-white rounded-lg bg-green-500 mt-5" role="alert">
+                    <div class="ms-3 text-sm font-medium">{{ message }}</div>
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-500 text-white rounded-lg focus:ring-2 p-1.5 hover:bg-green-600 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    </button>
+                </div>
+                
+            {% else %}
+                <div id="alert-2" class="flex items-center p-4 mb-4 text-red-100 rounded-lg bg-red-500 mt-5" role="alert">
+                    <div class="ms-3 text-sm font-medium">{{ message }}</div>
+                    <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-500 text-red-200 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-600 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#alert-2" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <form method="post" class="mt-5 space-y-5" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-6">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipe Name</label>
+                <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g Biryani" value="{% if data %}{{ name }}{% else %}{{ recipe.name }}{% endif %}" required />
+            </div>
+
+            <div>
+                <label for="cuisine" class="block mb-2 text-sm font-medium text-white">Select Cuisine Type</label>
+                <select id="cuisine" name="cuisine" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                    {% if not data %} 
+                        {% for cuisine in cuisines %}
+                            {% if recipe.cuisine != cuisine %}
+                                <option value="{{ cuisine }}">{{ cuisine }}</option>
+                            {% else %}
+                                <option value="{{ cuisine }}" selected>{{ cuisine }}</option>
+                            {% endif %}
+                        {% endfor %}
+
+                    {% else %}
+                        {% for cuisine in cuisines %}
+                            {% if cuisine.name != cuisine_selected %}
+                                <option value="{{ cuisine }}">{{ cuisine }}</option>
+                            {% else %}
+                                <option value="{{ cuisine }}" selected>{{ cuisine }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="ingredients" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Ingredients</label>
+                    <input type="number" name="total_ingredients" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="e.g 5" value="{% if data %}{{ total_ingredients }}{% else %}{{ recipe.total_ingredients }}{% endif %}" required />
+                </div>
+
+                <div>
+                    <label for="calories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Calories</label>
+                    <input type="number" name="calories" id="calories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g 500" value="{% if data %}{{ calories }}{% else %}{{ recipe.calories }}{% endif %}" required />
+                </div>
+            </div>
+        
+            <div class="mb-6">
+                <label for="total_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Time in Minutes</label>
+                <input type="number" name="total_time" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g 50" value="{% if data %}{{ total_time }}{% else %}{{ recipe.total_time_in_minutes }}{% endif %}" required />
+            </div>
+
+            <div class="mb-6">
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                <textarea name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" rows="5" placeholder="e.g Boil rice, add color" required>{% if data %}{{ description }}{% else %}{{ recipe.description }}{% endif %}</textarea>
+            </div>
+
+            <div>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">Change Image</label>
+                <img src="/media/{{ recipe.image }}" alt="Recipe Image" class="md:w-1/4 sm:w-1/2 w-full md:h-72 h-56 mb-2 rounded">
+                <input class="block w-full text-sm text-gray-900 rounded-lg cursor-pointer bg-gray-50" aria-describedby="file_input_help" id="image" type="file" name="image">
+            </div>
+            
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-1/3 block mx-auto px-5 py-2.5 text-center">Submit</button>
+        </form>
+
+    {% endif %}
+</div>
+{% endblock %}

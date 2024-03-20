@@ -1,0 +1,113 @@
+{% extends 'layout/layout.html' %}
+
+{% block content %}
+
+<section class="p-5 space-y-5">
+    <h1 class="text-center font-semibold text-2xl">Filter Recipes</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+                <label for="cuisine" class="block mb-2 text-sm font-medium text-gray-900">Cuisine</label>
+                <select id="cuisine" name="cuisine" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    <option value="any">Any</option>
+                    {% for cuisine in cuisines %}
+                        <option value="{{ cuisine }}">{{ cuisine }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="calories" class="block mb-2 text-sm font-medium text-gray-900">Calories</label>
+                <select id="calories" name="calories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    <option value="any">Any</option>
+                    <option value="1-100">100 or less</option>
+                    <option value="101-200">101 to 200</option>
+                    <option value="201-300">201 to 300</option>
+                    <option value="301-400">301 to 400</option>
+                    <option value="401-500">401 to 500</option>
+                    <option value="500+">More than 500</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="total_time" class="block mb-2 text-sm font-medium text-gray-900">Total Time</label>
+                <select id="total_time" name="total_time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    <option value="any">Any</option>
+                    <option value="1-15">15 minutes or less</option>
+                    <option value="16-30">16 to 30 minutes</option>
+                    <option value="31-45">31 to 45 minutes</option>
+                    <option value="46-60">46 to 60 minutes</option>
+                    <option value="1+">More than 1 hour</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="total_ingredients" class="block mb-2 text-sm font-medium text-gray-900">Total Ingredients</label>
+                <select id="total_ingredients" name="total_ingredients" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
+                    <option value="any">Any</option>
+                    <option value="1-5">5 or less</option>
+                    <option value="6-10">6 to 10</option>
+                    <option value="11-15">11 to 15</option>
+                    <option value="16-20">16 to 20</option>
+                    <option value="20+">More than 20</option>
+                </select>
+            </div>
+        </div>
+        
+        
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Find Recipes</button>
+    </form>
+
+    {% if filtered %}
+        <div class="my-10 mx-3">
+            <h1 class="text-center text-3xl font-bold">Filtered Recipes</h1>
+            
+            <div class="text-gray-600 body-font">
+                <div class="container px-5 pb-24 pt-5 mx-auto">
+                <div class="flex flex-wrap -m-4">
+                    {% for recipe in recipes %}
+                        <a href="{% url 'recipe_details' recipe.uuid %}" class="block p-4 md:w-1/4">
+                            <div class="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden">
+                                <div class="lg:h-48 md:h-36 overflow-hidden">
+                                    <img class="h-full w-full hover:scale-110 transition duration-300 ease-in-out object-cover object-center" src="/media/{{ recipe.image }}" alt="blog">
+                                </div>
+
+                                <div class="p-6">
+                                    <h1 class="title-font text-lg font-medium text-gray-900 mb-1">{{ recipe.name }}</h1>
+                                    <h2 class="tracking-widest text-xs title-font font-medium text-gray-900 mb-3">{{ recipe.cuisine.name }}</h2>
+                                    
+                                    <p>By {{ recipe.user.get_full_name }}</p>
+                                    <p class="leading-relaxed">Total Ingredients: {{ recipe.total_ingredients }}</p>
+                                    <p class="leading-relaxed mb-3">Total Calories: {{ recipe.calories }}</p>
+
+                                    <div class="space-y-0.5">
+                                        <span class="text-gray-900 text-sm md:mb-2 lg:mb-0">Added {{ recipe.created_at | date:"d M Y" }}</span>
+                                        <div class="text-gray-400 mr-3 flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1">
+                                            <svg class="w-5 h-5 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                <span class="text-black ml-1">
+                                                    {% if recipe.total_time_in_minutes <= 60  %}
+                                                        {{ recipe.total_time_in_minutes }} minutes
+                                                    {% else %}
+                                                        {{ recipe.total_time_in_hours }}
+                                                    {% endif %}
+                                                </span>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        {% empty %}
+                        <h1 class="text-center w-full mt-3 text-lg">No recipe found. Try searching something else.</h1>
+                    {% endfor %}
+                </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

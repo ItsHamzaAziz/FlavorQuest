@@ -19,7 +19,7 @@ def register(request):
                 if User.objects.filter(username=username).exists():
                     messages.info(request, 'Username already exists')
                     return render(request, 'accounts/register.html', {
-                        'title': 'Register | FlavourQuest',
+                        'title': 'Register | FlavorQuest',
                         'data': True,
                         'first_name': first_name,
                         'last_name': last_name,
@@ -31,7 +31,7 @@ def register(request):
                 elif User.objects.filter(email=email).exists():
                     messages.info(request, 'Email already exists')
                     return render(request, 'accounts/register.html', {
-                        'title': 'Register | FlavourQuest',
+                        'title': 'Register | FlavorQuest',
                         'data': True,
                         'first_name': first_name,
                         'last_name': last_name,
@@ -51,7 +51,7 @@ def register(request):
             else:
                 messages.info(request, 'Passwords are not same')
                 return render(request, 'accounts/register.html', {
-                        'title': 'Register | FlavourQuest',
+                        'title': 'Register | FlavorQuest',
                         'data': True,
                         'first_name': first_name,
                         'last_name': last_name,
@@ -62,7 +62,7 @@ def register(request):
                 })
 
         return render(request, 'accounts/register.html', {
-            'title': 'Register | FlavourQuest',
+            'title': 'Register | FlavorQuest',
             'data': False
         })
     except:
@@ -84,7 +84,7 @@ def log_in(request):
                 else:
                     messages.info(request, 'Incorrect Password')
                     return render(request, 'accounts/login.html', {
-                            'title': 'Register | FlavourQuest',
+                            'title': 'Register | FlavorQuest',
                             'data': True,
                             'user_input': user_input,
                             'password': password,
@@ -99,7 +99,7 @@ def log_in(request):
                 else:
                     messages.info(request, 'Incorrect Password')
                     return render(request, 'accounts/login.html', {
-                            'title': 'Register | FlavourQuest',
+                            'title': 'Register | FlavorQuest',
                             'data': True,
                             'user_input': user_input,
                             'password': password,
@@ -107,14 +107,14 @@ def log_in(request):
             else:
                 messages.info(request, 'Invalid Username or Email')
                 return render(request, 'accounts/login.html', {
-                        'title': 'Register | FlavourQuest',
+                        'title': 'Register | FlavorQuest',
                         'data': True,
                         'user_input': user_input,
                         'password': password,
                 })
 
         return render(request, 'accounts/login.html', {
-            'title': 'Login | FlavourQuest',
+            'title': 'Login | FlavorQuest',
             'data': False
         })
     except:
@@ -161,7 +161,7 @@ def edit_account(request):
                     if user.username != username:
                         messages.info(request, 'Username already exists')
                         return render(request, 'accounts/register.html', {
-                            'title': 'Register | FlavourQuest',
+                            'title': 'Register | FlavorQuest',
                             'data': True,
                             'first_name': first_name,
                             'last_name': last_name,
@@ -174,7 +174,7 @@ def edit_account(request):
                         if user.email != email:
                             messages.info(request, 'Email already exists')
                             return render(request, 'accounts/register.html', {
-                                'title': 'Register | FlavourQuest',
+                                'title': 'Register | FlavorQuest',
                                 'data': True,
                                 'first_name': first_name,
                                 'last_name': last_name,
@@ -209,7 +209,7 @@ def edit_account(request):
                     if user.email != email:
                         messages.info(request, 'Email already exists')
                         return render(request, 'accounts/register.html', {
-                            'title': 'Register | FlavourQuest',
+                            'title': 'Register | FlavorQuest',
                             'data': True,
                             'first_name': first_name,
                             'last_name': last_name,
@@ -244,7 +244,7 @@ def edit_account(request):
             else:
                 messages.info(request, 'Passwords are not same')
                 return render(request, 'accounts/register.html', {
-                        'title': 'Register | FlavourQuest',
+                        'title': 'Register | FlavorQuest',
                         'data': True,
                         'first_name': first_name,
                         'last_name': last_name,

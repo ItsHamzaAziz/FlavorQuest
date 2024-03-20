@@ -7,7 +7,7 @@ def index(request):
         return redirect('search', name)
 
     return render(request, 'base/index.html', {
-        'title': 'FlavourQuest',
+        'title': 'FlavorQuest',
         'recipes': Recipe.objects.all().order_by('-created_at')[:12]
     })
 

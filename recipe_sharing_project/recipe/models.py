@@ -25,15 +25,16 @@ class Recipe(BaseModel):
     cuisine = models.ForeignKey(Cuisine, on_delete=models.CASCADE, related_name='cuisine')
 
     def total_time_in_hours(self):
-        hours = int(self.total_time_in_minutes / 60)
-        remaining_minutes = self.total_time_in_minutes % 60
-        final_time = ''
+        hours = int(self.total_time_in_minutes / 60)    # Typecasting to get the number of hours as it is an integer value
+        remaining_minutes = self.total_time_in_minutes % 60     # Remiander will give us remaining minutes
+        final_time = ''     # Final time is initially an empty string. It'll be appended it as necessary
 
         if hours == 1:
             final_time += '1 hour'
         else:
             final_time += f'{hours} hours'
         
+        # If remaining minutes are zero then there is no need to display them
         if remaining_minutes == 0:
             return final_time
         elif remaining_minutes == 1:

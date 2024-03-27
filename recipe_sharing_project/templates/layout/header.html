@@ -18,6 +18,8 @@
     </a>
     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <div class="md:inline hidden space-x-1">
+
+          <!-- If user is logged in -->
           {% if user.is_authenticated %}
             <a href="{% url 'logout' %}">
               <button type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none font-medium rounded text-sm px-4 py-2 text-center">Logout</button>
@@ -50,7 +52,7 @@
           <a href="{% url 'add_recipe' %}" class="block py-2 px-3 {% if request.path == '/recipe/add' %} text-white bg-orange-500 md:text-orange-500 {% endif %} text-gray-900 md:hover:text-orange-500 rounded md:bg-transparent md:p-0">Add Recipe</a>
         </li>
         
-        
+        <!-- If user is logged in -->
         {% if user.is_authenticated %}
           <li>
             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-orange-500 md:p-0 md:w-auto">My Account<svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">

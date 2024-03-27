@@ -39,6 +39,7 @@
 
 
             {% if user.is_authenticated %}
+              <!-- If recipe is not of user which is logged in -->
               {% if recipe.user != request.user %}
                 <div class="flex justify-center">
                   {% if not saved %}

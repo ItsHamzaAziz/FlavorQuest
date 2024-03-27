@@ -18,6 +18,9 @@
 
         <form method="post" class="mt-5">
             {% csrf_token %}
+
+            <!-- Using boolean variable data here so that when user details are not updated and user is shown some error message then they get the values entered instead of blank input fields -->
+
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
                     <label for="first_name" class="block mb-2 text-sm font-medium dark:text-white">First name</label>

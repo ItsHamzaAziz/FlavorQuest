@@ -37,6 +37,8 @@
         <form method="post" class="mt-5 space-y-5" enctype="multipart/form-data">
             {% csrf_token %}
 
+            <!-- Using boolean variable data here so that when recipe is not updated and user is shown some error message then they get the values they selected and entered instead of default ones -->
+
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipe Name</label>
                 <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g Biryani" value="{% if data %}{{ name }}{% else %}{{ recipe.name }}{% endif %}" required />
@@ -87,6 +89,8 @@
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                 <textarea name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" rows="5" placeholder="e.g Boil rice, add color" required>{% if data %}{{ description }}{% else %}{{ recipe.description }}{% endif %}</textarea>
             </div>
+
+            <!-- Showing user recipe image. If they want to change it then they can select any other image -->
 
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">Change Image</label>

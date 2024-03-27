@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1ttzd3*+bgbzmhlf5y$21h^5t1fow8+8dj)6q#ef-pwrz53i#)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -134,5 +134,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 
-LOGIN_URL = '/accounts/login'
+LOGIN_URL = '/accounts/login'       # For those views or urls which require login and users tries to access them without logging in (they'll get redirected to this url)
 

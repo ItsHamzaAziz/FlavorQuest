@@ -23,8 +23,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='home'),
-    path('accounts', include('accounts.urls')),
-    path('recipe', include('recipe.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('recipe/', include('recipe.urls')),
     re_path(r'^.*/$', views.error_404, name='page-not-found')
 ]
 
